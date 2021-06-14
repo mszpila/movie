@@ -5,6 +5,7 @@ import { InjectCollection } from 'nest-mongodb';
 import { Movie } from '../../Movie';
 import { GetMovieDto } from '../../dto/GetMovieDto';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { fromEntityToBJSON, fromBJSONToGetMovieDto } from './MongoDbMapper';
 
 interface Obj {
   [key: string]: any;
@@ -22,14 +23,20 @@ export class MongoDbMovieRepository
     if (!movie) {
       throw new BadRequestException('Movie must be provided');
     }
-    await this.repository.insertOne(movie.toDto());
+    await this.repository.insertOne(fromEntityToBJSON(movie));
   }
 
   async findAll(): Promise<GetMovieDto[]> {
-    return await this.repository.find().toArray();
+    const foundMovies = await this.repository.find().toArray();
+    return foundMovies.map((movie) => fromBJSONToGetMovieDto(movie));
   }
   async find(obj: Obj): Promise<GetMovieDto[]> {
-    return await this.repository.find(obj).limit(5).toArray();
+    const foundMovies = await this.repository
+      .find(obj)
+      .skip(0)
+      .limit(5)
+      .toArray();
+    return foundMovies.map((movie) => fromBJSONToGetMovieDto(movie));
   }
   async exists(title: string): Promise<boolean> {
     return Boolean(await this.repository.findOne({ title }));

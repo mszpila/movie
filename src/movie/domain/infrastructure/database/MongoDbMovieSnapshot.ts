@@ -1,8 +1,9 @@
 import { AutoMap } from '@automapper/classes';
+import { Binary } from 'bson';
 
-export class GetMovieDto {
+export class MongoDbMovieSnapshot {
   @AutoMap()
-  readonly id: string;
+  readonly _id: Binary;
   @AutoMap()
   readonly title: string;
   @AutoMap()

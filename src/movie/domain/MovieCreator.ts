@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import { FetchedMovieDetailsDto } from './dto/FetchedMovieDetailsDto';
 import { Movie } from './Movie';
 
@@ -7,7 +8,7 @@ export class MovieCreator {
     userId: number,
   ): Promise<Movie> {
     const { title, released, genre, director } = fetchedMovieDetails;
-    const id = '123';
+    const id = uuid();
     return new Movie(
       id,
       title,
