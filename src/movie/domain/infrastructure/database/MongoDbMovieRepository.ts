@@ -19,11 +19,12 @@ export class MongoDbMovieRepository
     @InjectCollection('movies') private readonly repository: mongo.Collection,
   ) {}
 
-  async save(movie: Movie): Promise<void> {
+  async save(movie: Movie): Promise<Movie> {
     if (!movie) {
       throw new BadRequestException('Movie must be provided');
     }
     await this.repository.insertOne(fromEntityToBJSON(movie));
+    return movie;
   }
 
   async findAll(): Promise<GetMovieDto[]> {

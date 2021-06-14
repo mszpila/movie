@@ -31,7 +31,6 @@ export class MovieController {
       const movies = await this.movieFacade.findMoviesByAuthorId(
         +req.user.userId,
       );
-      console.log(movies, 'movies');
       this.movieFacade.checkMonthlyLimit(movies);
     }
     await this.movieFacade.addMovie(title, +req.user.userId);

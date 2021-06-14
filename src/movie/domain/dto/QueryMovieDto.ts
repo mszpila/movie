@@ -4,7 +4,7 @@ export class QueryMovieDto {
   readonly released: string;
   readonly genre: string;
   readonly director: string;
-  readonly authorId: string;
+  readonly authorId: number;
   readonly added: Date;
   readonly offset: string;
   readonly limit: string;

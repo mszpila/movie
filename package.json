@@ -18,7 +18,9 @@
     "test:watch": "jest --watch --detectOpenHandles",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:unit": "jest --runInBand --testPathPattern=test/unit --watch",
+    "test:int": "jest --runInBand --testPathPattern=test/integration --watch"
   },
   "dependencies": {
     "@automapper/classes": "^4.1.0",

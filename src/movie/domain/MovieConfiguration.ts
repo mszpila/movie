@@ -9,7 +9,7 @@ import { MovieCreationLimiter } from './MovieCreationLimiter';
 
 export class MovieConfiguration {
   userFacade(
-    movieServiceDetails: MovieDetailsService,
+    movieServiceDetails?: MovieDetailsService,
     movieRepository?: MovieRepository,
     movieQueryRepository?: MovieQueryRepository,
   ): MovieFacade {

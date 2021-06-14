@@ -5,6 +5,7 @@ import { MovieDetailsService } from './IMovieDetailsService';
 import { MovieQueryRepository } from './IMovieQueryRepository';
 import { MovieRepository } from './IMovieRepository';
 import { MovieCreationLimiter } from './MovieCreationLimiter';
+import { Movie } from './Movie';
 
 export class MovieFacade {
   constructor(
@@ -15,14 +16,14 @@ export class MovieFacade {
     private limiter: MovieCreationLimiter,
   ) {}
 
-  async addMovie(title: string, userId: number): Promise<void> {
+  async addMovie(title: string, userId: number): Promise<Movie> {
     const fetchedMovieDetails = await this.movieDetailsService.getMovieDetails(
       title,
     );
     if (await this.movieQueryRepository.exists(fetchedMovieDetails.title))
       throw new BadRequestException('Movie already exists');
     const movie = await this.creator.create(fetchedMovieDetails, userId);
-    await this.movieRepository.save(movie);
+    return await this.movieRepository.save(movie);
   }
 
   async findAllMovies(): Promise<GetMovieDto[]> {

@@ -10,7 +10,6 @@ export class MovieCreationLimiter {
     const currentMonth = currentDate.getMonth();
     const currentYear = currentDate.getFullYear();
     movies.forEach((movie) => {
-      console.log(movie.added.getMonth(), 'added');
       if (
         movie.added.getMonth() === currentMonth &&
         movie.added.getFullYear() === currentYear

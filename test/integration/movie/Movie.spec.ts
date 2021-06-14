@@ -5,7 +5,6 @@ import { INestApplication } from '@nestjs/common';
 import { moduleInitialization } from '../helpers/moduleInit';
 import { ConfigService } from '@nestjs/config';
 import { MovieFacade } from '../../../src/movie/domain/MovieFacade';
-// import { SampleMovie } from '../../sample_data/movie/SampleMovie';
 import { BasicUser, PremiumUser } from '../../sample_data/user/SampleUser';
 
 let app: INestApplication;
@@ -24,6 +23,10 @@ describe('Add movie', () => {
   mockdate.set(new Date('5/1/2021'));
 
   test('should not add a movie as a not logged in user', async () => {
+    await request(app.getHttpServer())
+      .post('/auth/user')
+      .send({ username: 'username', password: 'password' })
+      .expect(404);
     await request(app.getHttpServer()).post('/movies').expect(401);
   });
 
