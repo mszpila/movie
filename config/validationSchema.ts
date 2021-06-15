@@ -12,4 +12,5 @@ export const validationSchema = Joi.object({
       new Error('Missing JWT_SECRET env var. Set it and restart the server'),
     ),
   JWT_EXPIRATION_TIME: Joi.string().required(),
+  OMDB_API_KEY: Joi.string().required(),
 });
