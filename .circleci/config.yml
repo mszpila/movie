@@ -2,25 +2,20 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/node:14.15
-    working_directory: ~/movie
+      - image: circleci/node:14.15
     steps:
-      - run:
-          name: building
-          command: |
-            npm install
-            npm run prebuild
-            npm run build
+      - checkout
+      - run: npm install
+      - run: npm run prebuild
+      - run: npm run build
   test:
     docker:
-      - image: cimg/node:14.15
-    working_directory: ~/movie
+      - image: circleci/node:14.15
     steps:
-      - run:
-          name: testing
-          command: |
-            npm install
-            npm test
+      - checkout
+      - run: testing
+      - run: npm install
+      - run: npm test
 workflows:
   version: 2.1
   build_test:
