@@ -1,30 +1,27 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Project Name
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+> This project is made for recruitment at Netguru.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [General Info](#general-information)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Running the app](#running-the-app)
+- [API](#api)
+- [Test](#test)
+- [Docker](#docker)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## General Information
+
+Its main task is to store information about movies. This is done on the basis of the title entered by the user, then the title is sent to a third-party database and from there information such as full movie title, release date, genre(s) and director are fetched and saved.
+
+## Technologies Used
+
+- Typescript - version 4.0.3
+- Nestjs - version 7.6.0
+- Mongodb - version 3.6.9
+- Jest - version 26.6.3
 
 ## Installation
 
@@ -36,7 +33,7 @@ $ npm install
 
 ```bash
 # development
-$ npm run start
+$ npm start
 
 # watch mode
 $ npm run start:dev
@@ -45,29 +42,122 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## API
+
+> Sign in
+
+```nodejs
+POST http://localhost:8080/auth/login
+```
+
+BODY PARAMETER (required)
+Basic user
+
+```bash
+{
+    "username": "basic-thomas",
+    "password": "sR-_pcoow-27-6PAwCD8",
+}
+```
+
+Premium user
+
+```bash
+{
+    "username": "premium-jim",
+    "password": "GBLtTyq3E_UNjFnpo9m6",
+}
+```
+
+RESPONSE
+On success, the HTTP status code in the response header is 201 Created and the response body contains an access token which is required to add movies.
+
+```bash
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMywidXNlcklkIjoxMjMsIm5hbWUiOiJCYXNpYyBUaG9tYXMiLCJyb2xlIjoiYmFzaWMiLCJpYXQiOjE2MjM3NzcxMDksImV4cCI6MTYyMzc3ODkwOSwiaXNzIjoiaHR0cHM6Ly93d3cubmV0Z3VydS5jb20vIn0.s4qnaal4fFPgRBrJXne4FQ9pW-NOEipwkLGYU_6xzQI"
+}
+```
+
+> Get movies
+
+```nodejs
+GET http://localhost:8080/movies
+```
+
+Response
+On success, the HTTP status code in the response header is 200 OK and the response body contains an array of objects in JSON format.
+
+```bash
+[
+    {
+        "title": "Star Wars: Episode IV - A New Hope",
+        "released": "1977-05-24T23:00:00.000Z",
+        "genre": "Action, Adventure, Fantasy, Sci-Fi",
+        "director": "George Lucas",
+        "authorId": 123,
+        "added": "2021-06-15T22:18:44.573Z",
+        "id": "74d6c0e6-8ff8-488f-9f92-93a52391a10d"
+    },
+    {
+        "title": "Rick and Morty",
+        "released": "2013-12-01T23:00:00.000Z",
+        "genre": "Animation, Adventure, Comedy, Sci-Fi",
+        "director": "N/A",
+        "authorId": 123,
+        "added": "2021-06-15T22:18:58.857Z",
+        "id": "e2b13a2f-80b5-451f-802d-5c587abecb85"
+    }
+]
+```
+
+> Post movies
+
+```nodejs
+POST http://localhost:8080/movies
+```
+
+HEADER (required)
+A valid user access token
+
+```bash
+Authorization: Bearer <string>
+```
+
+BODY PARAMETER (required)
+
+```bash
+{
+    "title": <string>
+}
+```
+
+Response
+On success, the HTTP status code in the response header is 201 Created.
+
 ## Test
 
 ```bash
-# unit tests
+# run tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
+# watch mode
+$ npm run test:watch
+
+# unit tests
+$ npm run test:unit
+
+# integration tests
+$ npm run test:int
 
 # test coverage
 $ npm run test:cov
 ```
 
-## Support
+## Docker
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+To run dockerized application
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+```bash
+docker pull mszpila/movie
+docker run -p 8080:8080 movie
+```
